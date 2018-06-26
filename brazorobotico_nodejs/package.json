@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/BrazoRoboticoITR/BrazoRobotico/issues"
   },
-  "homepage": "https://github.com/BrazoRoboticoITR/BrazoRobotico#readme"
+  "homepage": "https://github.com/BrazoRoboticoITR/BrazoRobotico#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.30.0"
+  }
 }
