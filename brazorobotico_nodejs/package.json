@@ -1,0 +1,23 @@
+{
+  "name": "brazorobotico",
+  "version": "1.0.0",
+  "description": "Un brazo robotico para entregar donas y mostrar eficiencia",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrazoRoboticoITR/BrazoRobotico.git"
+  },
+  "keywords": [
+    "Arduino",
+    "Nodejs"
+  ],
+  "author": "Joshua",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrazoRoboticoITR/BrazoRobotico/issues"
+  },
+  "homepage": "https://github.com/BrazoRoboticoITR/BrazoRobotico#readme"
+}
