@@ -6,14 +6,10 @@ const bot = new TelegramBot(token, {
   polling: true
 });
 
-bot.onText(/\/echo (.+)/, (msg, match) => {
-
-  const chatId = msg.chat.id;
-  const resp = match[1];
-  bot.sendMessage(chatId, resp);
-});
+var NumeroSecreto = 564409319;
 bot.on('message', (msg) => {
   const chatId = msg.chat.id;
+  console.log("El ID del char" + chatId);
   var Mensaje =msg.text;
   if(Mensaje == "Hola"){
   bot.sendMessage(chatId, 'Buenos dias bienvenidos a donas empaquetadas automaticas');
