@@ -11,15 +11,15 @@ void setup() {
   Serial.begin(9600);
 
   if (SensorColor.init()) {
-    Serial.println("Sensor Iniciado");
+    // Serial.println("Sensor Iniciado");
   }
   else {
-    Serial.println("Fallo sensor");
+    //  Serial.println("Fallo sensor");
   }
   if ( SensorColor.enableLightSensor(false) ) {
-    Serial.println(F("Sensor de luz está encendido"));
+    // Serial.println(F("Sensor de luz está encendido"));
   } else {
-    Serial.println(F("Algo fallo en el sensor!"));
+    //  Serial.println(F("Algo fallo en el sensor!"));
   }
 }
 
@@ -28,16 +28,17 @@ void loop() {
         !SensorColor.readRedLight(LuzRoja) ||
         !SensorColor.readGreenLight(LuzVerde) ||
         !SensorColor.readBlueLight(LuzAzul) ) {
-    Serial.println("El sensor falló");
+    //  Serial.println("El sensor falló");
   } else {
     if (LuzRoja > LuzVerde && LuzRoja > LuzAzul) {
-      Serial.println("color rojo");
+      Serial.print("R");
     }
     else if (LuzVerde > LuzAzul) {
-      Serial.println("color verde");
+      Serial.print("G");
     }
     else {
-      Serial.println("color azul");
+      Serial.print("B");
     }
   }
+  delay(10000);
 }
