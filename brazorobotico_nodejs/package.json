@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/BrazoRoboticoITR/BrazoRobotico#readme",
   "dependencies": {
+    "fast-csv": "^2.4.1",
     "node-telegram-bot-api": "^0.30.0",
     "serialport": "^6.2.1"
   }
