@@ -10,28 +10,24 @@ var SerialPort = require('serialport');
 var port = new SerialPort('COM3', {
   baudRate: 9600
 });
-//creamos para poder abrir los datos de ordenes
-var fs = require("fs");
-var Archivo = fs.readFileSync("orden.json");
-var ordenes = JSON.parse(Archivo);
-
 //Ejecuta un mensaje el bot, pero solo se ejecuta cuando llegue un mensaje del ID
 bot.on('message', (msg) => {
   const chatId = msg.chat.id;
   console.log("El ID del char" + chatId);
   var mensaje = msg.text;
-  if (mensaje == "Crear") {
-    bot.sendMessage(chatId, 'Perfecto vamos a empezar a empaquetar sus donas, cuantas donas de chocolate queres');
-    ordenes.[chatId] = "activo";
-  } else if (mensaje == "Hola") {
-    bot.sendMessage(chatId, 'Buenos dias bienvenidos a donas empaquetadas automaticas');
+  if (mensaje == "Hola") {
+    bot.sendMessage(chatId, "Hola mucho gusto, que desea ordenar? Estan las opciones -Fresa -Chicle -Limon ");
   } else if (mensaje == "Adios") {
-    bot.sendMessage(chatId, 'Gracias por su preferencia.')
+    bot.sendMessage(chatId, "Gracias por su preferencia");
+  } else if (mensaje == "Limon") {
+    bot.sendMessage(chatId, "¿Cuantas donas de limon desea ordenar?");
+  } else if (mensaje == "Chicle") {
+    bot.sendMessage(chatId, "¿Cuantas donas de chicle desea ordenar?");
+  } else if (mensaje == "Fresa") {
+    bot.sendMessage(chatId, "¿Cuantas donas de fresa desea ordenar?");
   } else {
-    bot.sendMessage(chatId, 'No entiendo el comando');
+    bot.sendMessage("chatId, No entiendo su mensaje, ¿Lo puede repetir por favor?");
   }
-  var data = JSON.stringify(ordenes);
-  fs.writeFileSync('orden.json', data);
 });
 //Cuando recibe el mensaje el puerto usb
 /*port.on('data', function(data) {

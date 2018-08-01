@@ -1,7 +1,8 @@
+
 console.log("Iniciando codigo");
 
 //Crear un archivo json
-var Data = '{"nombre":"cipitio"}';
+var Data = '{"nombre":"Josue"}';
 //Tarformar el archivo JSON
 var Objeto = JSON.parse(Data);
 //Mostar la data
@@ -16,7 +17,7 @@ var ObjetoJSON = JSON.parse(Archivo);
 console.log("Usuario: "+ ObjetoJSON.usuario);
 console.log("Correo: "+ ObjetoJSON.correo);
 console.log("ID: "+ ObjetoJSON["id"]);
-//Agregar informasion al JSON
+//Agregar informacion al JSON
 ObjetoJSON.edad = 14;
 console.log("La edad es: "+ ObjetoJSON.edad);
 ObjetoJSON.id = 3;
