@@ -1,9 +1,51 @@
 #include <Servo.h>
 
-int PinMotor[7] = {2, 3, 4, 5, 6, 7, 8};
-int PosicionActual[6] = {0, 0, 0, 0, 0, 0};
-int PosicionMaxima[6] = {180, 180, 180, 180, 180, 180};
-int PosicionMinima[6] = {0, 0, 0, 0, 0, 0};
+//6 Garra
+//5 Muneca X
+//4 Muneca Y
+//3
+//2
+//1
+//0
+int PinMotor[7] = {3, 12, 4, 5, 6, 7, 11};
+int PosicionActual[6] = {90, 90, 90, 90, 90, 90};
+int PosicionPasada[6] = {90, 90, 90, 90, 90, 90};
+int PosicionMaxima[6] = {170, 100, 100, 120, 120, 120};
+int PosicionMinima[6] = {10, 70, 65, 40, 60, 110};
+int PosicionDescanso[6] = {90, 85, 70, 40, 90, 90};
+int CantidadPasos = 7;
+int PasoMover = 10;
+int Descanso = 100;
+
+int PosicionFresa[7][6] = {
+  {90, 90, 90, 90, 90, 119},//Posicion 0
+  {60, 90, 90, 90, 90, 119},//Posicion 1
+  {60, 90, 90, 90, 90, 119},//Posicion 2
+  {60, 90, 90, 90, 90, 119},//Posicion 3
+  {60, 90, 90, 90, 90, 119},//Posicion 4
+  {60, 90, 90, 90, 90, 119},//Posicion 5
+  {90, 90, 90, 90, 90, 119},//Posicion 6
+};
+int PosicionChicle[7][6] = {
+  {90, 90, 90, 90, 90, 115},//Posicion 0
+  {90, 90, 90, 90, 90, 115},//Posicion 1
+  {90, 90, 90, 90, 90, 115},//Posicion 2
+  {90, 90, 90, 90, 90, 115},//Posicion 3
+  {90, 90, 90, 90, 90, 115},//Posicion 4
+  {90, 90, 90, 90, 90, 115},//Posicion 5
+  {90, 90, 90, 90, 90, 115},//Posicion 6
+};
+int PosicionLimon[7][6] = {
+  {90, 90, 90, 90, 90, 119},//Posicion 0
+  {120, 90, 90, 90, 90, 119},//Posicion 1
+  {90, 90, 90, 90, 90, 119},//Posicion 2
+  {90, 90, 90, 90, 90, 119},//Posicion 3
+  {90, 90, 90, 90, 90, 119},//Posicion 4
+  {90, 90, 90, 90, 90, 119},//Posicion 5
+  {90, 90, 90, 90, 90, 119},//Posicion 6
+};
+int TiposDonas = 3;
+
 
 Servo brazo[7];
 int EstadoFlujograma = 0;
@@ -15,8 +57,8 @@ void setup() {
     brazo[i].attach(PinMotor[i]);
     brazo[i].write(PosicionActual[i]);
   }
-  brazo[7].attach(PinMotor[7]);
-  brazo[7].write(PosicionActual[1]);
+  brazo[6].attach(PinMotor[6]);
+  brazo[6].write(PosicionActual[1]);
   Serial.begin(9600);
 }
 
@@ -25,55 +67,72 @@ void loop() {
 
   if (Serial.available()) {
     char Letra = Serial.read();
-    // Serial.print("Letra ");
-    // Serial.print(Letra);
-    // Serial.print(" E ");
-    // Serial.println(EstadoFlujograma);
-    if (EstadoFlujograma == 0) {
-      if (Letra == 'M') {
-        EstadoFlujograma = 1;
-        Ptmp = 0;
-        Mtmp = 0;
-      }
+    if (Letra == 'D' || Letra == 'd') {
+      DescansarBrazo();
     }
-    else if (EstadoFlujograma == 1) {
-      if (Letra >= '0' && Letra <= '5') {
-        Mtmp = int (Letra - '0');
-        //    Serial.print("Mtmp:");
-        //    Serial.println(Mtmp);
-        EstadoFlujograma = 2;
-      } else {
-        EstadoFlujograma = 0;
-      }
-    } else if (EstadoFlujograma == 2) {
-      if (Letra == 'P') {
-        EstadoFlujograma = 3;
-      } else {
-        EstadoFlujograma = 0;
-      }
-    } else if (EstadoFlujograma == 3) {
-      if (Letra >= '0' && Letra <= '9') {
-        Ptmp = Ptmp * 10 + int(Letra - '0');
-      } else if (Letra == 'X') {
-        EstadoFlujograma = 4;
-        //   Serial.print(" Ptmp:");
-        //   Serial.println(Ptmp);
-      }
-      else {
-        EstadoFlujograma = 0;
-      }
+    else if (Letra == 'F' || Letra == 'f') {
+      Rutina(PosicionFresa);
+    }
+    else if (Letra == 'C' || Letra == 'c') {
+      Rutina(PosicionChicle);
+    }
+    else if (Letra == 'L' || Letra == 'l') {
+      Rutina(PosicionLimon);
+    }
+    else {
+      ActualizarFlujograma(Letra);
+    }
+  }
+}
 
-    } else if (EstadoFlujograma == 4) {
+void ActualizarFlujograma(char Letra ) {
+  // Serial.print("Letra ");
+  // Serial.print(Letra);
+  // Serial.print(" E ");
+  // Serial.println(EstadoFlujograma);
+  if (EstadoFlujograma == 0) {
+    if (Letra == 'M' || Letra == 'm') {
+      EstadoFlujograma = 1;
+      Ptmp = 0;
+      Mtmp = 0;
+    }
+  }
+  else if (EstadoFlujograma == 1) {
+    if (Letra >= '0'  || Letra <= '5') {
+      Mtmp = int (Letra - '0');
+      //    Serial.print("Mtmp:");
+      //    Serial.println(Mtmp);
+      EstadoFlujograma = 2;
+    } else {
       EstadoFlujograma = 0;
-      if (Ptmp >= PosicionMinima[Mtmp] && Ptmp <= PosicionMaxima[Mtmp]) {
-        PosicionActual[Mtmp] = Ptmp;
-        brazo[Mtmp].write( PosicionActual[Mtmp]);
-        if (Ptmp == 1) {
-          brazo[6].write( PosicionActual[Mtmp]);
-        }
-      }
+    }
+  } else if (EstadoFlujograma == 2) {
+    if (Letra == 'P' || Letra == 'p') {
+      EstadoFlujograma = 3;
+    } else {
+      EstadoFlujograma = 0;
+    }
+  } else if (EstadoFlujograma == 3) {
+    if (Letra >= '0' && Letra <= '9') {
+      Ptmp = Ptmp * 10 + int(Letra - '0');
+    } else if (Letra == 'X' || Letra == 'x') {
+      EstadoFlujograma = 4;
+      //   Serial.print(" Ptmp:");
+      //   Serial.println(Ptmp);
+    }
+    else {
+      EstadoFlujograma = 0;
     }
 
+  } else if (EstadoFlujograma == 4) {
+    EstadoFlujograma = 0;
+    if (Ptmp >= PosicionMinima[Mtmp] && Ptmp <= PosicionMaxima[Mtmp]) {
+      PosicionActual[Mtmp] = Ptmp;
+      brazo[Mtmp].write( PosicionActual[Mtmp]);
+      if (Mtmp == 1) {
+        brazo[6].write( PosicionActual[Mtmp]);
+      }
+    }
   }
 }
 
@@ -86,4 +145,44 @@ void MostrarPosicion() {
   }
   Serial.println();
   //delay(1000);
+}
+
+void DescansarBrazo() {
+  for (int i = 0 ; i  < 6  ; i ++) {
+    brazo[i].write(PosicionDescanso[i]);
+  }
+}
+
+
+void Rutina(int Pasos[7][6]) {
+  //Contar en que paso estamos
+  for (int i = 0; i < CantidadPasos; i++) {
+    //Contando los motor actualizar la posicion
+    bool Finalizamos = false;
+    while (!Finalizamos) {// mientra no finaliza segir
+      Serial.print("Paso ");
+      Serial.print(i);
+      Serial.print(" : ");
+      Finalizamos = true;
+      for (int j = 0; j < 6; j++) {
+        if (Pasos[i][j] > PosicionActual[j]) {
+          PosicionActual[j] = PosicionActual[j] + PasoMover;
+          brazo[j].write(PosicionActual[j]);
+        } else if (Pasos[i][j] < PosicionActual[j]) {
+          PosicionActual[j] = PosicionActual[j] - PasoMover;
+          brazo[j].write(PosicionActual[j]);
+        }
+        if (abs(Pasos[i][j] - PosicionActual[j]) < PasoMover) {
+          PosicionActual[j] = Pasos[i][j];
+          brazo[j].write(PosicionActual[j]);
+        }
+        if (!(Pasos[i][j] == PosicionActual[j])) {
+          Finalizamos = false;
+        }
+      }
+      MostrarPosicion();
+      delay(Descanso);
+    }
+  }
+  DescansarBrazo();
 }
