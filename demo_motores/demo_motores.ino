@@ -10,21 +10,20 @@
 int PinMotor[7] = {3, 12, 4, 5, 6, 7, 11};
 int PosicionActual[6] = {90, 90, 90, 90, 90, 90};
 int PosicionPasada[6] = {90, 90, 90, 90, 90, 90};
-int PosicionMaxima[6] = {170, 100, 100, 120, 120, 120};
-int PosicionMinima[6] = {10, 70, 65, 40, 60, 110};
-int PosicionDescanso[6] = {90, 85, 70, 40, 90, 90};
-int CantidadPasos = 7;
+int PosicionMaxima[6] = {170, 150, 145, 120, 120, 120};
+int PosicionMinima[6] = {10, 70, 65, 40, 60, 5};
+int PosicionDescanso[6] = {90, 85, 75, 40, 90, 90};
+int CantidadPasos = 6;
 int PasoMover = 10;
 int Descanso = 100;
 
-int PosicionFresa[7][6] = {
-  {90, 90, 90, 90, 90, 119},//Posicion 0
-  {60, 90, 90, 90, 90, 119},//Posicion 1
-  {60, 90, 90, 90, 90, 119},//Posicion 2
-  {60, 90, 90, 90, 90, 119},//Posicion 3
-  {60, 90, 90, 90, 90, 119},//Posicion 4
-  {60, 90, 90, 90, 90, 119},//Posicion 5
-  {90, 90, 90, 90, 90, 119},//Posicion 6
+int PosicionFresa[6][6] = {
+  {90, 90, 100, 90, 90, 70},//Posicion 0
+  {90, 110, 135, 90, 90, 70 },//Posicion 1
+  {107, 95, 110, 90, 90, 120},//Posicion 2
+  {130, 70, 110, 80, 90, 120},//Posicion 3
+  {155, 70, 80, 80, 90, 80},//Posicion 4
+  {90, 85, 75, 40, 90, 90},//Posicion 5
 };
 int PosicionChicle[7][6] = {
   {90, 90, 90, 90, 90, 115},//Posicion 0

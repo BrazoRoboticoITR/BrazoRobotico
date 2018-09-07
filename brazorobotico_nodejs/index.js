@@ -32,8 +32,8 @@ bot.on('message', (msg) => {
   } else if (mensaje == "Fresa") {
     Pedido = "Fresa";
     bot.sendMessage(chatId, "¿Cuantas donas de fresa desea ordenar?");
-  } else if (mensaje == "Ayuda") {
-    bot.sendMessage(chatId, "para pedir ...");
+  } else if (mensaje == "Ayuda" || mensaje == "ayuda" || mensaje == "Alluda" || mensaje == "Aiuda") {
+    bot.sendMessage(chatId, "Para pedir su dona ponga en el chat el sabor de dona por ejemplo Chicle, y despues escoge cuantas donas de chicle quisiera comprar, y si quiere de otro sabor repite el formato");
   } else if (Pedido == "Fresa") {
     console.log("Pedido de fresa");
     if (mensaje == "1") {
@@ -68,15 +68,12 @@ bot.on('message', (msg) => {
     console.log("Pedido de Limon");
     if (mensaje == "1") {
       port.write('l');
-      console.log("Pedido 1 Limon");
       Pedido == "";
     } else if (mensaje == "2") {
       port.write('ll');
-      console.log("Pedido 2 Limon");
       Pedido == "";
     } else if (mensaje == "3") {
       port.write('lll');
-      console.log("Pedido 3 Limon");
       Pedido == "";
     }
   } else {
